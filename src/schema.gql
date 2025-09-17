@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserType {
+  id: Int!
+  name: String!
+  email: String!
+}
+
+type UsersType {
+  users: [UserType!]!
+}
+
+type Query {
+  getUsers: UsersType!
+  getUser(id: Int!): UserType
+}
