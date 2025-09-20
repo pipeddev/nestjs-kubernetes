@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-crud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-crud
+  template:
+    metadata:
+      labels:
+        app: microservice-crud
+    spec:
+      containers:
+      - name: microservice-crud
+        image: # ubicación de la image del contenedor
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+          - name: DB_URL
+            value: # URL de la base de datos
+        # - name: NODE_OPTIONS
+        # value: "--dns-result-order=ipv4first"
