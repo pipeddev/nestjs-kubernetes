@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-crud-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: microservice-crud
+  ports:
+  - port: 80
+    targetPort: 3000
