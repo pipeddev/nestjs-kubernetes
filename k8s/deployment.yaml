@@ -12,14 +12,59 @@ spec:
       labels:
         app: microservice-crud
     spec:
+      serviceAccountName: gke-sql-sa
+      imagePullSecrets:
+        - name: artifact-registry-secret
       containers:
       - name: microservice-crud
-        image: # ubicación de la image del contenedor
+        image: us-central1-docker.pkg.dev/utility-grin-463301-h1/microservices-repo/microservice-crud:1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
-          - name: DB_URL
-            value: # URL de la base de datos
-        # - name: NODE_OPTIONS
-        # value: "--dns-result-order=ipv4first"
+          #- name: DB_URL
+          #  value: "postgresql://neondb_owner:npg_b9tu0MKNICzH@ep-muddy-voice-adpw2p51-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
+          - name: DB_HOST
+            value: "127.0.0.1"
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: "appuser"
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: db-credentials
+                key: password
+          - name: DB_NAME
+            value: "microservicedb"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 40
+          periodSeconds: 20
+      - name: cloud-sql-proxy
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.11.3
+        args:
+          - "--port=5432"
+          - "utility-grin-463301-h1:us-central1:microservice-db"
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"

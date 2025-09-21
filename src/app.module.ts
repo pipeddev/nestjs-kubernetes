@@ -5,6 +5,7 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -14,12 +15,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        url: config.get<string>('DB_URL'),
+        //url: config.get<string>('DB_URL'), si usamos Neon o otro servicio que use URL
+        host: config.get<string>('DB_HOST', '127.0.0.1'),
+        port: parseInt(config.get<string>('DB_PORT', '5432'), 10),
+        username: config.get<string>('DB_USER', ''),
+        password: config.get<string>('DB_PASS', ''),
+        database: config.get<string>('DB_NAME', ''),
         autoLoadEntities: true,
         synchronize: true,
-        ssl: {
+        /*ssl: {
           rejectUnauthorized: false,
-        },
+        },*/
       }),
       inject: [ConfigService],
     }),
@@ -30,6 +36,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       path: '/graphql',
     }),
     UsersModule,
+    HealthModule,
   ],
 })
 export class AppModule {}
