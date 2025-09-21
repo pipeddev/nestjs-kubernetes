@@ -17,7 +17,7 @@ spec:
         - name: artifact-registry-secret
       containers:
       - name: microservice-crud
-        image: us-central1-docker.pkg.dev/utility-grin-463301-h1/microservices-repo/microservice-crud:1.0
+        image: $REGION-docker.pkg.dev/$PROJECT_ID/microservices-repo/microservice-crud:1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -60,7 +60,7 @@ spec:
         image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.11.3
         args:
           - "--port=5432"
-          - "utility-grin-463301-h1:us-central1:microservice-db"
+          - "$PROJECT_ID:$REGION:microservice-db"
         resources:
           requests:
             cpu: "50m"
