@@ -1,5 +1,5 @@
 # Etapa de compilación
-FROM --platform=$BUILDPLATFORM node:22-slim AS builder
+FROM --platform=linux/amd64 node:22-slim AS builder
 
 WORKDIR /app
 
@@ -7,27 +7,32 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 COPY . .
 RUN pnpm run build
 
 # Etapa de runtime (producción)
-FROM --platform=$TARGETPLATFORM node:22-slim
+FROM --platform=linux/amd64 node:22-slim
 
 WORKDIR /app
 
-# 👇 Instalar certificados para conexiones SSL/TLS (Neon los necesita)
+# Instalar certificados para conexiones SSL/TLS (Neon los necesita)
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Copiar solo lo necesario desde la etapa builder
 COPY --from=builder /app/dist ./dist
 COPY package.json pnpm-lock.yaml ./
 
+# Instalar solo las dependencias de producción
 RUN corepack enable && corepack prepare pnpm@latest --activate \
   && pnpm install --prod --frozen-lockfile
 
-# 👇 Forzar IPv4 para evitar EAI_AGAIN
-ENV NODE_OPTIONS="--dns-result-order=ipv4first"
+# Forzar IPv4 para evitar el error EAI_AGAIN en algunos entornos (dejar comentado si no es necesario)
+#ENV NODE_OPTIONS="--dns-result-order=ipv4first"
 
+# Exponer el puerto de la aplicación NestJS
+EXPOSE 3000
+
+# Comando para iniciar la aplicación
 CMD ["node", "dist/main.js"]
