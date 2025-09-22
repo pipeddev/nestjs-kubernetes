@@ -15,7 +15,7 @@ Este proyecto es un microservicio construido con [NestJS](https://nestjs.com/), 
 - [GraphQL](https://graphql.org/) con Apollo Server v4
 - [REST](https://restfulapi.net/) para mutaciones
 - [TypeORM](https://typeorm.io/) como ORM
-- [PostgreSQL 17 (Neon)](https://neon.tech/) como base de datos
+- [PostgreSQL 17 (Neon)](https://neon.tech/) como base de datos o [ Cloud SQL con Cloud Proxy PostgreSQL]([https://neon.tech/](https://cloud.google.com/sql/docs/mysql/connect-auth-proxy?hl=es-419)) 
 - [pnpm](https://pnpm.io/) como gestor de dependencias
 
 ---
