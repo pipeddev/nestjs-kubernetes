@@ -13,7 +13,7 @@ export class JSendInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const gqlContext = GqlExecutionContext.create(context);
     if (gqlContext.getType() === 'graphql') {
-      return next.handle(); // GraphQL maneja sus propios errores
+      return next.handle();
     }
 
     const isJSendEnabled = this.reflector.getAllAndOverride<boolean>(JSEND_RESPONSE_KEY, [
@@ -29,7 +29,6 @@ export class JSendInterceptor implements NestInterceptor {
       map(
         (data): JSendSuccess => ({
           status: 'success',
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           data,
         }),
       ),
