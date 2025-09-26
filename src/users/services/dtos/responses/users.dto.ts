@@ -23,3 +23,13 @@ export class UserDto {
     return dto;
   }
 }
+
+export class UserTestDto {
+  user: UserDto;
+
+  static valueOf(user: User | null): UserTestDto {
+    const dto = new UserTestDto();
+    dto.user = UserDto.valueOf(user);
+    return dto;
+  }
+}
