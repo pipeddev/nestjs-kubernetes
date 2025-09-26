@@ -24,9 +24,9 @@ import { HealthModule } from './health/health.module';
         database: config.get<string>('DB_NAME', ''),
         autoLoadEntities: true,
         synchronize: true,
-        /*ssl: {
+        ssl: {
           rejectUnauthorized: false,
-        },*/
+        },
       }),
       inject: [ConfigService],
     }),

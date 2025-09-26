@@ -29,4 +29,8 @@ export class UsersRepository {
   async delete(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { email } });
+  }
 }
