@@ -45,8 +45,8 @@ export class JSendValidationPipe implements PipeTransform {
     return object;
   }
 
-  private toValidate(metatype: new (...args: any[]) => any): boolean {
-    const types: Array<new (...args: any[]) => any> = [String, Boolean, Number, Array, Object];
+  private toValidate(metatype: new (...args: unknown[]) => any): boolean {
+    const types: Array<new (...args: unknown[]) => any> = [String, Boolean, Number, Array, Object];
     return !types.includes(metatype);
   }
 

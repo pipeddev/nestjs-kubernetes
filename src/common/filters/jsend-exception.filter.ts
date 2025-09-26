@@ -8,7 +8,6 @@ import {
   ContextType,
 } from '@nestjs/common';
 import { FastifyReply } from 'fastify';
-import { GqlArgumentsHost } from '@nestjs/graphql';
 import { JSendError, JSendFail } from '../types/jsend.types';
 
 @Catch()
@@ -17,7 +16,6 @@ export class JSendExceptionFilter implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost) {
     if ((host.getType<ContextType>() as string) === 'graphql') {
-      GqlArgumentsHost.create(host);
       throw exception;
     }
 

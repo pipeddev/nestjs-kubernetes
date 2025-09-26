@@ -20,8 +20,14 @@ export class StructuredValidationSafePipe implements PipeTransform<unknown> {
   private readonly logger = new Logger(StructuredValidationSafePipe.name);
 
   async transform(value: unknown, { metatype }: ArgumentMetadata): Promise<unknown> {
-    if (!metatype || !this.toValidate(metatype)) {
-      return value;
+    if (value === null || value === undefined) {
+      throw new HttpException(
+        JSendUtil.fail({
+          message: 'Validation failed',
+          errors: [{ value: ['Value should not be null or undefined'] }],
+        }),
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const object = plainToClass(metatype as ClassConstructor<object>, value as object);
