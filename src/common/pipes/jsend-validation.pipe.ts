@@ -23,7 +23,7 @@ export class JSendValidationPipe implements PipeTransform {
 
     if (value === null || value === undefined) {
       throw new HttpException(
-        JSendUtil.fail({ message: 'No se proporcionaron datos válidos' }),
+        JSendUtil.fail({ message: 'No valid data provided' }),
         HttpStatus.BAD_REQUEST,
       );
     }
