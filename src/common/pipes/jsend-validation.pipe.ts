@@ -21,15 +21,28 @@ export class JSendValidationPipe implements PipeTransform {
       return value;
     }
 
-    const object = plainToClass(metatype as ClassConstructor<unknown>, value);
-    const errors = await validate(object as object);
+    if (value === null || value === undefined) {
+      throw new HttpException(
+        JSendUtil.fail({ message: 'No se proporcionaron datos válidos' }),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const objectType = metatype as ClassConstructor<T>;
+    const object = plainToClass(objectType, value);
+
+    // Especificamos que object es de tipo T para la validación
+    const errors = await validate(object as unknown as object, {
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
 
     if (errors.length > 0) {
       const validationErrors = this.formatErrors(errors);
       throw new HttpException(JSendUtil.fail(validationErrors), HttpStatus.BAD_REQUEST);
     }
 
-    return value;
+    return object;
   }
 
   private toValidate(metatype: new (...args: any[]) => any): boolean {
@@ -41,8 +54,18 @@ export class JSendValidationPipe implements PipeTransform {
     const result: ValidationErrorResponse = {};
 
     errors.forEach((error) => {
-      if (error.property && error.constraints) {
-        result[error.property] = Object.values(error.constraints);
+      if (error.property) {
+        if (error.constraints) {
+          result[error.property] = Object.values(error.constraints);
+        }
+
+        // Manejar errores anidados
+        if (error.children && error.children.length > 0) {
+          const nestedErrors = this.formatErrors(error.children);
+          for (const [key, value] of Object.entries(nestedErrors)) {
+            result[`${error.property}.${key}`] = value;
+          }
+        }
       }
     });
 
