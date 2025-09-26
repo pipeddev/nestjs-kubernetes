@@ -30,6 +30,10 @@ export class StructuredValidationSafePipe implements PipeTransform<unknown> {
       );
     }
 
+    if (!metatype || !this.toValidate(metatype)) {
+      return value;
+    }
+
     const object = plainToClass(metatype as ClassConstructor<object>, value as object);
     const errors = await validate(object);
 
