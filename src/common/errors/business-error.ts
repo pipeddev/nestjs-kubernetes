@@ -4,7 +4,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 export interface BusinessErrorOptions {
   message: string;
   code?: string;
-  details?: any;
+  details?: Record<string, unknown> | unknown;
   status?: HttpStatus;
 }
 

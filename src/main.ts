@@ -10,9 +10,12 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
   // Configurar CORS
-  /*await app.register(require('@fastify/cors'), {
-    origin: true,
-  });*/
+  app.enableCors({
+    origin: true, // o configuración específica como ['https://example.com']
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    credentials: true,
+  });
+
   app.useGlobalPipes(new StructuredValidationSafePipe());
   // Configurar validación global (puedes mantener tu JSendValidationPipe o usar el estándar)
   app.useGlobalPipes(
