@@ -9,15 +9,12 @@ import { StructuredValidationSafePipe } from './common/pipes/structured-validati
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
-  // Configurar CORS
   app.enableCors({
-    origin: true, // o configuración específica como ['https://example.com']
+    origin: true,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
 
-  app.useGlobalPipes(new StructuredValidationSafePipe());
-  // Configurar validación global (puedes mantener tu JSendValidationPipe o usar el estándar)
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -25,6 +22,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       disableErrorMessages: process.env.NODE_ENV === 'production',
     }),
+    new StructuredValidationSafePipe(),
   );
 
   // Aplicar filtros y interceptors JSend globalmente

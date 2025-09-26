@@ -8,9 +8,8 @@ import { BusinessError } from 'src/common/errors/business-error';
 @Injectable()
 export class CreateUserUC {
   constructor(private readonly repository: UsersRepository) {}
-  // Aquí puedes inyectar repositorios u otros servicios necesarios
+
   async execute(createUserDto: CreateUserDto): Promise<UserDto> {
-    // Lógica para crear un usuario
     const existingUser = await this.repository.findByEmail(createUserDto.email);
     if (existingUser) {
       throw new BusinessError({
