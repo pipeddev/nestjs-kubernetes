@@ -24,7 +24,6 @@ export class StructuredValidationSafePipe implements PipeTransform<unknown> {
       return value;
     }
 
-    // ✅ SOLUCIÓN 1: Type assertion con ClassConstructor
     const object = plainToClass(metatype as ClassConstructor<object>, value as object);
     const errors = await validate(object);
 
@@ -40,7 +39,7 @@ export class StructuredValidationSafePipe implements PipeTransform<unknown> {
       );
     }
 
-    return value;
+    return object;
   }
 
   private toValidate(metatype: Type<unknown>): boolean {
