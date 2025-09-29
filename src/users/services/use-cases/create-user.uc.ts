@@ -11,6 +11,7 @@ export class CreateUserUC {
 
   async execute(createUserDto: CreateUserDto): Promise<UserDto> {
     const existingUser = await this.repository.findByEmail(createUserDto.email);
+
     if (existingUser) {
       throw new BusinessError({
         message: 'Email already in use',

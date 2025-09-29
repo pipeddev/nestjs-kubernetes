@@ -7,9 +7,13 @@ import {
   Logger,
   ContextType,
 } from '@nestjs/common';
-import { FastifyReply } from 'fastify';
 import { JSendError, JSendFail } from '../types/jsend.types';
+import { JSendUtil } from '../utils/jsend.util';
 
+interface FastifyResponse {
+  status(code: number): FastifyResponse;
+  send(payload: unknown): FastifyResponse;
+}
 @Catch()
 export class JSendExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(JSendExceptionFilter.name);
@@ -20,7 +24,7 @@ export class JSendExceptionFilter implements ExceptionFilter {
     }
 
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<FastifyReply>();
+    const response = ctx.getResponse<FastifyResponse>();
 
     let status: number;
     let jsendResponse: JSendError | JSendFail;
@@ -39,24 +43,22 @@ export class JSendExceptionFilter implements ExceptionFilter {
               : exceptionResponse,
         };
       } else {
-        // Server errors - use 'error' status
-        jsendResponse = {
-          status: 'error',
-          message: exception.message,
-          code: status,
-        };
+        jsendResponse = JSendUtil.error(exception.message || 'Internal Server Error', status);
       }
     } else {
-      // Unknown errors
+      // Unknown errors - use JSend 'error' status
       status = HttpStatus.INTERNAL_SERVER_ERROR;
-      jsendResponse = {
-        status: 'error',
-        message: 'Internal server error',
-        code: status,
-      };
 
-      // Log unexpected errors
-      this.logger.error('Unexpected error:', exception);
+      const errorMessage = exception instanceof Error ? exception.message : 'Internal server error';
+      const data = exception instanceof Error ? { message: exception.message } : undefined;
+      jsendResponse = JSendUtil.error(errorMessage, status, data);
+
+      // Log unexpected errors with more detail
+      this.logger.error('Unexpected error occurred:', {
+        message: errorMessage,
+        stack: exception instanceof Error ? exception.stack : 'No stack trace available',
+        exception,
+      });
     }
 
     response.status(status).send(jsendResponse);

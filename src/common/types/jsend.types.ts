@@ -8,16 +8,15 @@ export interface JSendFail<T = unknown> {
   data: T;
 }
 
-export interface JSendError {
+export interface JSendError<T = unknown> {
   status: 'error';
   message: string;
   code?: number;
-  data?: unknown;
+  data?: T;
 }
 
-export type JSendResponse<T = unknown> = JSendSuccess<T> | JSendFail<T> | JSendError;
+export type JSendResponse<T = unknown> = JSendSuccess<T> | JSendFail<T> | JSendError<T>;
 
-// Tipos específicos para validación
 export interface ValidationFailData {
   message: string;
   errors: Array<Record<string, string[]>>;
