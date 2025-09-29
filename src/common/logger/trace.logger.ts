@@ -13,27 +13,22 @@ export class TraceLogger {
   }
 
   log(message: any): void {
-    const traceId = this.getTraceId();
-    this.logger.log(`[${traceId}] ${message}`);
+    this.logger.log(`[${this.getTraceId()}] ${message}`);
   }
 
   error(message: any, trace?: string): void {
-    const traceId = this.getTraceId();
-    this.logger.error(`[${traceId}] ${message}`, trace);
+    this.logger.error(`[${this.getTraceId()}] ${message}`, trace);
   }
 
   warn(message: any): void {
-    const traceId = this.getTraceId();
-    this.logger.warn(`[${traceId}] ${message}`);
+    this.logger.warn(`[${this.getTraceId()}] ${message}`);
   }
 
   debug(message: any): void {
-    const traceId = this.getTraceId();
-    this.logger.debug(`[${traceId}] ${message}`);
+    this.logger.debug(`[${this.getTraceId()}] ${message}`);
   }
 
   verbose(message: any): void {
-    const traceId = this.getTraceId();
-    this.logger.verbose(`[${traceId}] ${message}`);
+    this.logger.verbose(`[${this.getTraceId()}] ${message}`);
   }
 }

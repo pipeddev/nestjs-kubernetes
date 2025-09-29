@@ -141,9 +141,6 @@ importers:
       typescript-eslint:
         specifier: ^8.20.0
         version: 8.44.0(eslint@9.35.0)(typescript@5.9.2)
-      uuid:8.3.2:
-        specifier: link:@types/uuid:8.3.2
-        version: link:@types/uuid:8.3.2
 
 packages:
 

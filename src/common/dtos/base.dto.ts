@@ -3,13 +3,13 @@ import { plainToInstance, ClassConstructor } from 'class-transformer';
 
 export class BaseDTO {
   /**
-   * Lista de campos que se enmascararán al serializar para logs.
-   * Sobrescribir en subclases: `static redacted = ['password', 'ssn']`
+   * List of fields that will be redacted when serializing for logs.
+   * Override in subclasses: `static redacted = ['password', 'ssn']`
    */
   static redacted: string[] = [];
 
   /**
-   * Convierte el DTO a string seguro para logging (usa enmascarado).
+   * Convert the DTO to a safe string for logging (applies redaction).
    */
   toString(): string {
     try {
@@ -20,7 +20,7 @@ export class BaseDTO {
   }
 
   /**
-   * Convierte la instancia a un objeto plano y aplica enmascarado.
+   * Convert the instance to a plain object and apply redaction.
    */
   toJSON(): Record<string, any> {
     const obj = { ...this } as Record<string, any>;
@@ -35,7 +35,7 @@ export class BaseDTO {
   }
 
   /**
-   * Valida la instancia usando class-validator. Devuelve errores o null si es válido.
+   * Validate the instance using class-validator. Returns errors or null if valid.
    */
   async validateSelf() {
     const errors = await validate(this as object);
@@ -43,14 +43,14 @@ export class BaseDTO {
   }
 
   /**
-   * Crea una instancia del DTO desde un objeto plano (usa class-transformer).
+   * Create a DTO instance from a plain object (uses class-transformer).
    */
   static fromPlain<T extends BaseDTO>(Ctor: ClassConstructor<T>, plain: Record<string, any>): T {
     return plainToInstance(Ctor, plain);
   }
 
   /**
-   * Clona la instancia actual (respetando transformaciones).
+   * Clone the current instance (respecting transformations).
    */
   clone<T extends BaseDTO>(): T {
     const Ctor = this.constructor as new () => T;

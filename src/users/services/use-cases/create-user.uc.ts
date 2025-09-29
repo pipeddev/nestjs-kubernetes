@@ -12,7 +12,7 @@ export class CreateUserUC {
   constructor(private readonly repository: UsersRepository) {}
 
   async execute(createUserDto: CreateUserDto): Promise<UserDto> {
-    this.logger.log(`Creating user with email: ${createUserDto.toString()}`);
+    this.logger.log('Creating user');
     const existingUser = await this.repository.findByEmail(createUserDto.email);
 
     if (existingUser) {
