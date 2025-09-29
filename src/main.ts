@@ -5,8 +5,10 @@ import { JSendExceptionFilter } from './common/filters/jsend-exception.filter';
 import { JSendInterceptor } from './common/interceptors/jsend.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { StructuredValidationSafePipe } from './common/pipes/structured-validation.pipe';
+import { TraceLogger } from './common/logger/trace.logger';
 
 async function bootstrap() {
+  const logger = new TraceLogger('Bootstrap');
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
   app.enableCors({
@@ -33,7 +35,7 @@ async function bootstrap() {
   const host = process.env.HOST || '0.0.0.0';
 
   await app.listen(port, host);
-  console.log(`🚀 Application is running on: http://${host}:${port}`);
-  console.log(`📊 GraphQL Playground: http://${host}:${port}/graphql`);
+  logger.log(`Application is running on: http://${host}:${port}`);
+  logger.log(`GraphQL Playground: http://${host}:${port}/graphql`);
 }
 void bootstrap();

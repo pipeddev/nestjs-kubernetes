@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export class TraceLogger {
   private readonly logger: Logger;
@@ -9,7 +9,7 @@ export class TraceLogger {
   }
 
   private getTraceId(): string {
-    return uuidv4() as string;
+    return randomUUID();
   }
 
   log(message: any): void {
