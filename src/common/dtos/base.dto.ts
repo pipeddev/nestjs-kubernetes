@@ -53,7 +53,7 @@ export class BaseDTO {
    * Clone the current instance (respecting transformations).
    */
   clone<T extends BaseDTO>(): T {
-    const Ctor = this.constructor as new () => T;
+    const Ctor = this.constructor as ClassConstructor<T>;
     return BaseDTO.fromPlain(Ctor, this.toJSON());
   }
 
