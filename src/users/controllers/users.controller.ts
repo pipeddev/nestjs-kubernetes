@@ -2,8 +2,10 @@ import { Controller, Post, Body, Param, Put, Delete, HttpCode, HttpStatus } from
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../services/dtos/requests/create-user.dto';
 import { UpdateUserDto } from '../services/dtos/requests/update-user.dto';
+import { JSendResponse } from 'src/common/decorators/jsend-response.decorator';
 
 @Controller('users')
+@JSendResponse()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

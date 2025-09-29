@@ -22,12 +22,12 @@
   "dependencies": {
     "@apollo/server": "^4.11.3",
     "@as-integrations/fastify": "^3.0.0",
+    "@fastify/cors": "^11.1.0",
     "@nestjs/apollo": "^13.1.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/graphql": "^13.1.0",
-    "@nestjs/platform-express": "^11.0.1",
     "@nestjs/platform-fastify": "^11.1.6",
     "@nestjs/typeorm": "^11.0.0",
     "class-transformer": "^0.5.1",
