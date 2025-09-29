@@ -12,14 +12,14 @@ importers:
         specifier: ^4.11.3
         version: 4.12.2(encoding@0.1.13)(graphql@16.11.0)
       '@as-integrations/fastify':
-        specifier: ^2.1.1
-        version: 2.1.1(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1)
+        specifier: 3.0.0
+        version: 3.0.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1)
       '@fastify/cors':
         specifier: ^11.1.0
         version: 11.1.0
       '@nestjs/apollo':
         specifier: ^13.1.0
-        version: 13.1.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(@as-integrations/fastify@2.1.1(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1))(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(@nestjs/graphql@13.1.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(class-transformer@0.5.1)(class-validator@0.14.2)(graphql@16.11.0)(reflect-metadata@0.2.2))(graphql@16.11.0)
+        version: 13.1.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(@as-integrations/fastify@3.0.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1))(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(@nestjs/graphql@13.1.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(class-transformer@0.5.1)(class-validator@0.14.2)(graphql@16.11.0)(reflect-metadata@0.2.2))(graphql@16.11.0)
       '@nestjs/common':
         specifier: ^11.0.1
         version: 11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -251,12 +251,12 @@ packages:
   '@apollographql/graphql-playground-html@1.6.29':
     resolution: {integrity: sha512-xCcXpoz52rI4ksJSdOCxeOCn2DLocxwHf9dVT/Q90Pte1LX+LY+91SFtJF3KXVHH8kEin+g1KKCQPKBjZJfWNA==}
 
-  '@as-integrations/fastify@2.1.1':
-    resolution: {integrity: sha512-iupYSQyRrlBAdsDcCYzuKjJlJAKiQpRDLd33A6yAF3Ip/rGrSDDDrxfJWp6FqyVlivSL+MQkGIphmUI/ckfZkg==}
-    engines: {node: '>=16'}
+  '@as-integrations/fastify@3.0.0':
+    resolution: {integrity: sha512-UXJYMraDQKwCUjk5zKDb4GJnPzqKbn+sPOboNISZCinPAPQsTzuZiw1/VgJNfGRW4l+dI3C0DDM9PysYCG+MWg==}
+    engines: {node: '>=20'}
     peerDependencies:
       '@apollo/server': ^4.0.0
-      fastify: ^4.4.0
+      fastify: ^5.3.0
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -2406,9 +2406,6 @@ packages:
 
   fast-uri@3.1.0:
     resolution: {integrity: sha512-iPeeDKJSWf4IEOasVVrknXpaBV0IApz/gp7S2bb7Z4Lljbl2MGJRqInZiUrQwV16cpzw/D3S5j5Julj/gT52AA==}
-
-  fastify-plugin@4.5.1:
-    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
 
   fastify-plugin@5.0.1:
     resolution: {integrity: sha512-HCxs+YnRaWzCl+cWRYFnHmeRFyR5GVnJTAaCJQiYzQSDwK9MgJdyAsuL3nh0EWRCYMgQ5MeziymvmAhUHYHDUQ==}
@@ -4714,11 +4711,11 @@ snapshots:
     dependencies:
       xss: 1.0.15
 
-  '@as-integrations/fastify@2.1.1(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1)':
+  '@as-integrations/fastify@3.0.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1)':
     dependencies:
       '@apollo/server': 4.12.2(encoding@0.1.13)(graphql@16.11.0)
       fastify: 5.6.1
-      fastify-plugin: 4.5.1
+      fastify-plugin: 5.0.1
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -5492,7 +5489,7 @@ snapshots:
       '@napi-rs/nice-win32-x64-msvc': 1.1.1
     optional: true
 
-  '@nestjs/apollo@13.1.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(@as-integrations/fastify@2.1.1(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1))(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(@nestjs/graphql@13.1.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(class-transformer@0.5.1)(class-validator@0.14.2)(graphql@16.11.0)(reflect-metadata@0.2.2))(graphql@16.11.0)':
+  '@nestjs/apollo@13.1.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(@as-integrations/fastify@3.0.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1))(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(@nestjs/graphql@13.1.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(class-transformer@0.5.1)(class-validator@0.14.2)(graphql@16.11.0)(reflect-metadata@0.2.2))(graphql@16.11.0)':
     dependencies:
       '@apollo/server': 4.12.2(encoding@0.1.13)(graphql@16.11.0)
       '@apollo/server-plugin-landing-page-graphql-playground': 4.0.1(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))
@@ -5504,7 +5501,7 @@ snapshots:
       lodash.omit: 4.5.0
       tslib: 2.8.1
     optionalDependencies:
-      '@as-integrations/fastify': 2.1.1(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1)
+      '@as-integrations/fastify': 3.0.0(@apollo/server@4.12.2(encoding@0.1.13)(graphql@16.11.0))(fastify@5.6.1)
 
   '@nestjs/cli@11.0.10(@swc/cli@0.6.0(@swc/core@1.13.5)(chokidar@4.0.3))(@swc/core@1.13.5)(@types/node@22.18.5)':
     dependencies:
@@ -7211,8 +7208,6 @@ snapshots:
   fast-safe-stringify@2.1.1: {}
 
   fast-uri@3.1.0: {}
-
-  fastify-plugin@4.5.1: {}
 
   fastify-plugin@5.0.1: {}
 
