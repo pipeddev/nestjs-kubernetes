@@ -11,13 +11,13 @@ export class UsersDto {
 }
 
 export class UserDto {
-  id: number;
+  id: string;
   name: string;
   email: string;
 
   static valueOf(user: User | null): UserDto {
     const dto = new UserDto();
-    dto.id = user?.id ?? 0;
+    dto.id = user?.id ?? '';
     dto.name = user?.name ?? '';
     dto.email = user?.email ?? '';
     return dto;

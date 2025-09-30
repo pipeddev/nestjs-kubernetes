@@ -1,7 +1,4 @@
-import { Resolver, Query, Int, Args } from '@nestjs/graphql';
-//import { UsersService } from './users.service';
-//import { User } from './user.entity';
-
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { UsersService } from '../services/users.service';
 import { UsersType, UserType } from '../services/graph-types/user.graph-type';
 import { UserDto, UsersDto } from '../services/dtos/responses/users.dto';
@@ -17,9 +14,7 @@ export class UsersResolver {
   }
 
   @Query(() => UserType, { nullable: true })
-  async getUser(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<UserDto | null> {
+  async getUser(@Args('id', { type: () => String }) id: string): Promise<UserDto | null> {
     return this.usersService.findOne(id);
   }
 }

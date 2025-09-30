@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 export class FindUserUC {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(id: number): Promise<UserDto | null> {
+  async execute(id: string): Promise<UserDto | null> {
     const user = await this.usersRepository.findById(id);
 
     return UserDto.valueOf(user);

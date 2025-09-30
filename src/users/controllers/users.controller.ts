@@ -15,13 +15,13 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() userData: UpdateUserDto) {
+  update(@Param('id') id: string, @Body() userData: UpdateUserDto) {
     return this.usersService.update(id, userData);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 }

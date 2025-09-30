@@ -22,7 +22,7 @@ export class UsersService {
     return this.selectUsersUseCase.execute();
   }
 
-  async findOne(id: number): Promise<UserDto | null> {
+  async findOne(id: string): Promise<UserDto | null> {
     return this.findUserUC.execute(id);
   }
 
@@ -30,11 +30,11 @@ export class UsersService {
     return this.createUserUC.execute(createUserDto);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
     return this.updateUserUC.execute(id, updateUserDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.deleteUserUC.execute(id);
   }
 
