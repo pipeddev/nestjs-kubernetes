@@ -5,7 +5,7 @@ import { UsersRepository } from 'src/users/model/repositories/users.repository';
 export class DeleteUserUC {
   constructor(private readonly repository: UsersRepository) {}
 
-  async execute(id: number): Promise<void> {
+  async execute(id: string): Promise<void> {
     const user = await this.repository.findById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type UserType {
-  id: Int!
+  id: String!
   name: String!
   email: String!
 }
@@ -14,5 +14,5 @@ type UsersType {
 
 type Query {
   getUsers: UsersType!
-  getUser(id: Int!): UserType
+  getUser(id: String!): UserType
 }

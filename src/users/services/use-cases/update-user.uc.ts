@@ -7,7 +7,7 @@ import { UserDto } from '../dtos/responses/users.dto';
 @Injectable()
 export class UpdateUserUC {
   constructor(private readonly repository: UsersRepository) {}
-  async execute(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
+  async execute(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
     let user = await this.repository.findById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
