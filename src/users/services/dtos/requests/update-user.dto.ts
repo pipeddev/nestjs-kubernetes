@@ -1,9 +1,10 @@
 import { Optional } from '@nestjs/common';
-import { IsNumber } from 'class-validator';
+import { IsUUID } from 'class-validator';
+import { BaseDTO } from 'src/common/dtos/base.dto';
 
-export class UpdateUserDto {
-  @IsNumber()
-  id: number;
+export class UpdateUserDto extends BaseDTO {
+  @IsUUID()
+  id: string;
 
   @Optional()
   name?: string;
