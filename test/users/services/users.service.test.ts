@@ -69,7 +69,6 @@ describe('UsersService', () => {
   it('should call updateUserUC.execute on update', async () => {
     const updateUserDto: UpdateUserDto = {
       name: 'Updated',
-      id: '21iu21',
     };
     const userDto: UserDto = { id: '1', name: 'Updated', email: 'test@test.com' };
     (updateUserUC.execute as jest.Mock).mockResolvedValue(userDto);
@@ -87,5 +86,51 @@ describe('UsersService', () => {
 
     expect(deleteUserUC.execute).toHaveBeenCalledWith('1');
     expect(result).toBe(true);
+  });
+
+  it('should return null if findUserUC.execute returns null', async () => {
+    (findUserUC.execute as jest.Mock).mockResolvedValue(null);
+
+    const result = await service.findOne('non-existent-id');
+
+    expect(findUserUC.execute).toHaveBeenCalledWith('non-existent-id');
+    expect(result).toBeNull();
+  });
+
+  it('should propagate errors from selectUsersUseCase.execute', async () => {
+    const error = new Error('Failed to fetch users');
+    (selectUsersUseCase.execute as jest.Mock).mockRejectedValue(error);
+
+    await expect(service.findAll()).rejects.toThrow('Failed to fetch users');
+  });
+
+  it('should propagate errors from findUserUC.execute', async () => {
+    const error = new Error('User not found');
+    (findUserUC.execute as jest.Mock).mockRejectedValue(error);
+
+    await expect(service.findOne('1')).rejects.toThrow('User not found');
+  });
+
+  it('should propagate errors from createUserUC.execute', async () => {
+    const error = new Error('Create failed');
+    (createUserUC.execute as jest.Mock).mockRejectedValue(error);
+
+    await expect(service.create({ name: 'Test', email: 'test@test.com' })).rejects.toThrow(
+      'Create failed',
+    );
+  });
+
+  it('should propagate errors from updateUserUC.execute', async () => {
+    const error = new Error('Update failed');
+    (updateUserUC.execute as jest.Mock).mockRejectedValue(error);
+
+    await expect(service.update('1', { name: 'Updated' })).rejects.toThrow('Update failed');
+  });
+
+  it('should propagate errors from deleteUserUC.execute', async () => {
+    const error = new Error('Delete failed');
+    (deleteUserUC.execute as jest.Mock).mockRejectedValue(error);
+
+    await expect(service.remove('1')).rejects.toThrow('Delete failed');
   });
 });
