@@ -15,6 +15,7 @@ module.exports = {
     '!src/main.ts',
     '!src/environment.ts',
     '!src/environments/**',
+    '!src/database/**',
   ],
   testPathIgnorePatterns: [
     '/node_modules/',
@@ -36,6 +37,7 @@ module.exports = {
     'src/environment.ts',
     'src/environments/',
     'src/migrations/',
+    'src/database/',
   ],
   coverageDirectory: './coverage',
   coverageThreshold: {
