@@ -32,16 +32,23 @@ jobs:
     - name: Instalar dependencias
       run: pnpm install --frozen-lockfile
 
-    - name: Ejecutar tests unitarios
-      run: pnpm test
-
     - name: Ejecutar tests con cobertura
       run: pnpm test:cov
-      continue-on-error: true
+
+    - name: Verificar cobertura mínima (80%)
+      run: |
+        COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+        echo "Cobertura actual: ${COVERAGE}%"
+        if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+          echo "❌ Error: La cobertura es ${COVERAGE}%, se requiere al menos 80%"
+          exit 1
+        else
+          echo "✅ Cobertura aprobada: ${COVERAGE}%"
+        fi
 
     - name: Subir reporte de cobertura
       uses: codecov/codecov-action@v4
-      if: success()
+      if: always()
       with:
         file: ./coverage/lcov.info
         flags: unittests
