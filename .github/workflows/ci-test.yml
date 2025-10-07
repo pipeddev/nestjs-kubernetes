@@ -1,0 +1,56 @@
+name: CI - Tests y Cobertura
+
+on:
+  push:
+    branches: [ main, develop, 'feature/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    - name: Instalar pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+
+    - name: Configurar Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+
+    - name: Instalar dependencias
+      run: pnpm install --frozen-lockfile
+
+    - name: Ejecutar tests con cobertura
+      run: pnpm test:cov
+
+    - name: Verificar cobertura mínima (80%)
+      run: |
+        COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+        echo "Cobertura actual: ${COVERAGE}%"
+        if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+          echo "❌ Error: La cobertura es ${COVERAGE}%, se requiere al menos 80%"
+          exit 1
+        else
+          echo "✅ Cobertura aprobada: ${COVERAGE}%"
+        fi
+
+    - name: Subir reporte de cobertura
+      uses: codecov/codecov-action@v4
+      if: always()
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+      continue-on-error: true
