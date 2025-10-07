@@ -40,6 +40,7 @@ module.exports = {
     'src/database/',
   ],
   coverageDirectory: './coverage',
+  coverageReporters: ['text', 'lcov', 'json-summary', 'html'],
   coverageThreshold: {
     global: {
       branches: 80,
