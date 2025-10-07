@@ -1,0 +1,49 @@
+name: Tests Unitarios
+
+on:
+  push:
+    branches: [ main, develop, 'feature/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    - name: Instalar pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+
+    - name: Configurar Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+
+    - name: Instalar dependencias
+      run: pnpm install --frozen-lockfile
+
+    - name: Ejecutar tests unitarios
+      run: pnpm test
+
+    - name: Ejecutar tests con cobertura
+      run: pnpm test:cov
+      continue-on-error: true
+
+    - name: Subir reporte de cobertura
+      uses: codecov/codecov-action@v4
+      if: success()
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+      continue-on-error: true
